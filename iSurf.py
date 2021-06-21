@@ -1,17 +1,10 @@
-from random import randint
-from threading import Thread, Timer
-import pygetwindow
-from PIL import Image  # pip install pillow
-from PIL.ImageFilter import *
-from PyQt5.QtCore import *  # pip install PyQt5
-from PyQt5.QtGui import *
+from threading import Thread
+
 from PyQt5.QtWebEngineWidgets import *  # search for it
-from PyQt5.QtWidgets import *
 from pyautogui import *
 from win32api import *
 from win10toast import ToastNotifier
 import keyboard
-from PyQt5 import QtWidgets, QtCore, QtGui, uic
 from pygame import mixer, error, USEREVENT, event
 from mutagen.mp3 import MP3, HeaderNotFoundError, MutagenError
 from assets.abstracts.splash import *
@@ -66,9 +59,10 @@ class Main(QWidget):
         self.setAutoFillBackground(True)
         self.username = GetUserName()
 
-        # # UI Setup
-        self.ui = uic.loadUi("D:/file_explorer_ui/UPDATE4.ui", self)
-        self.show()
+        # # # UI Setup
+        # self.ui = uic.loadUi("D:/file_explorer_ui/UPDATE4.ui", self)
+        # self.show()
+        self.setupUi(self)
 
         # Visibility
         self.sent_ui.setVisible(False)
@@ -94,16 +88,22 @@ class Main(QWidget):
             self.set_acrylic(False, "dark")
             print('dark')
 
+        # additional settigs
+
         if read_theme == 'acrylic':
             self.theme_box.setCurrentIndex(1)
+            self.additional_settings_manager('set_invisible')
         elif read_theme == 'transparent':
             self.theme_box.setCurrentIndex(2)
+            self.additional_settings_manager('tint_only')
         elif read_theme == 'blur':
             self.theme_box.setCurrentIndex(3)
+            self.additional_settings_manager('set_visible')
         elif read_theme == 'light':
             self.theme_box.setCurrentIndex(4)
         elif read_theme == 'dark':
             self.theme_box.setCurrentIndex(5)
+            self.additional_settings_manager('set_invisible')
         elif read_theme == 'amoled':
             self.theme_box.setCurrentIndex(6)
         elif read_theme == 'default':
@@ -203,6 +203,1833 @@ class Main(QWidget):
     #     self.menuAnimation.setDirection(QtCore.QVariantAnimation.Forward)
     #     self.menuAnimation.start()
     #     print("Trying ..")
+    def setupUi(self, Form):
+        Form.setObjectName("Form")
+        Form.resize(979, 761)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(Form.sizePolicy().hasHeightForWidth())
+        Form.setSizePolicy(sizePolicy)
+        self.gridLayout = QtWidgets.QGridLayout(Form)
+        self.gridLayout.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout.setSpacing(0)
+        self.gridLayout.setObjectName("gridLayout")
+        self.all_frame = QtWidgets.QFrame(Form)
+        self.all_frame.setObjectName("all_frame")
+        self.main_layout = QtWidgets.QHBoxLayout(self.all_frame)
+        self.main_layout.setContentsMargins(0, 0, 0, 0)
+        self.main_layout.setSpacing(0)
+        self.main_layout.setObjectName("main_layout")
+        self.gridLayout_5 = QtWidgets.QGridLayout()
+        self.gridLayout_5.setObjectName("gridLayout_5")
+        self.graphics = QtWidgets.QFrame(self.all_frame)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.graphics.sizePolicy().hasHeightForWidth())
+        self.graphics.setSizePolicy(sizePolicy)
+        self.graphics.setMinimumSize(QtCore.QSize(350, 0))
+        self.graphics.setMaximumSize(QtCore.QSize(380, 771))
+        self.graphics.setStyleSheet("background: black;")
+        self.graphics.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.graphics.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.graphics.setLineWidth(0)
+        self.graphics.setObjectName("graphics")
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.graphics)
+        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_2.setSpacing(0)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_3.setSpacing(0)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_4.setContentsMargins(10, 4, -1, -1)
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.collapse = QtWidgets.QPushButton(self.graphics)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.collapse.sizePolicy().hasHeightForWidth())
+        self.collapse.setSizePolicy(sizePolicy)
+        self.collapse.setMinimumSize(QtCore.QSize(20, 30))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(9)
+        font.setBold(False)
+        font.setWeight(50)
+        self.collapse.setFont(font)
+        self.collapse.setStyleSheet("QPushButton{\n"
+                                    "color: white;\n"
+                                    "background: transparent;\n"
+                                    "text-align: left;\n"
+                                    "padding-left: 4px;\n"
+                                    "\n"
+                                    "\n"
+                                    "}\n"
+                                    "\n"
+                                    "\n"
+                                    "QPushButton::pressed{\n"
+                                    "    background-color: rgba(255, 255, 255, 30)\n"
+                                    "}\n"
+                                    "")
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("assets/resources/images/menu.png"),
+                       QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.collapse.setIcon(icon)
+        self.collapse.setAutoRepeat(True)
+        self.collapse.setObjectName("collapse")
+        self.horizontalLayout_4.addWidget(self.collapse, 0, QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
+        self.verticalLayout_3.addLayout(self.horizontalLayout_4)
+        spacerItem = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.verticalLayout_3.addItem(spacerItem)
+        spacerItem1 = QtWidgets.QSpacerItem(20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.verticalLayout_3.addItem(spacerItem1)
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setSizeConstraint(QtWidgets.QLayout.SetMinimumSize)
+        self.horizontalLayout.setContentsMargins(7, -1, 17, -1)
+        self.horizontalLayout.setSpacing(3)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.search = QtWidgets.QPushButton(self.graphics)
+        self.search.setMinimumSize(QtCore.QSize(40, 45))
+        self.search.setMaximumSize(QtCore.QSize(200, 16777215))
+        self.search.setStyleSheet("background: transparent;")
+        self.search.setText("")
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("assets/resources/images/icons8-search-30.png"), QtGui.QIcon.Normal,
+                        QtGui.QIcon.Off)
+        self.search.setIcon(icon1)
+        self.search.setIconSize(QtCore.QSize(20, 20))
+        self.search.setObjectName("search")
+        self.horizontalLayout.addWidget(self.search)
+        self.search_box = QtWidgets.QLineEdit(self.graphics)
+        self.search_box.setMinimumSize(QtCore.QSize(0, 30))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(10)
+        self.search_box.setFont(font)
+        self.search_box.setStyleSheet("QLineEdit {\n"
+                                      "    color: white;\n"
+                                      "   border-radius: 5px;\n"
+                                      "  border: 2px solid rgb(91, 101, 124);\n"
+                                      "   padding-left: 10px;\n"
+                                      "   selection-color: rgb(255, 255, 255);\n"
+                                      "   selection-background-color: rgb(255, 121, 198);\n"
+                                      "    background: transparent;\n"
+                                      "}\n"
+                                      "\n"
+                                      "QLineEdit:hover {\n"
+                                      "   border: 2px solid rgb(64, 71, 88);\n"
+                                      "    background-color: rgba(255, 255, 255, 30)\n"
+                                      "}\n"
+                                      "\n"
+                                      "QLineEdit:focus {\n"
+                                      "  border: 2px solid rgb(91, 101, 124);\n"
+                                      "}")
+        self.search_box.setObjectName("search_box")
+        self.horizontalLayout.addWidget(self.search_box)
+        self.verticalLayout_3.addLayout(self.horizontalLayout)
+        spacerItem2 = QtWidgets.QSpacerItem(20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.verticalLayout_3.addItem(spacerItem2)
+        self.GDrive = QtWidgets.QPushButton(self.graphics)
+        self.GDrive.setMinimumSize(QtCore.QSize(0, 45))
+        self.GDrive.setMaximumSize(QtCore.QSize(420, 45))
+        font = QtGui.QFont()
+        font.setFamily("Yu Gothic UI")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
+        self.GDrive.setFont(font)
+        self.GDrive.setAutoFillBackground(False)
+        self.GDrive.setStyleSheet("QPushButton{\n"
+                                  "color: white;\n"
+                                  "background: transparent;\n"
+                                  "text-align: left;    \n"
+                                  "padding-left: 10px;\n"
+                                  "}\n"
+                                  "\n"
+                                  "QPushButton::hover{\n"
+                                  "    color: white;\n"
+                                  "    background-color : rgba(255, 255  ,255 ,50);\n"
+                                  "\n"
+                                  "}\n"
+                                  "\n"
+                                  "QPushButton::pressed{\n"
+                                  "    background-color: rgba(255, 255, 255, 80)\n"
+                                  "}\n"
+                                  "\n"
+                                  "QTabBar::tab::disabled {width: 0; height: 0; margin: 0; padding: 0; border: none;} ")
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap("assets/resources/images/icons8-google-drive-25.png"), QtGui.QIcon.Normal,
+                        QtGui.QIcon.Off)
+        self.GDrive.setIcon(icon2)
+        self.GDrive.setIconSize(QtCore.QSize(25, 25))
+        self.GDrive.setObjectName("GDrive")
+        self.verticalLayout_3.addWidget(self.GDrive)
+        self.gdrive_line = QtWidgets.QFrame(self.graphics)
+        self.gdrive_line.setMaximumSize(QtCore.QSize(16777215, 1))
+        self.gdrive_line.setStyleSheet("background-color: rgba(255, 255, 255, 80);\n"
+                                       "color: rgba(255, 255, 255, 80);\n"
+                                       "margin-left: 15px;\n"
+                                       "margin-right: 25px;")
+        self.gdrive_line.setFrameShape(QtWidgets.QFrame.HLine)
+        self.gdrive_line.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.gdrive_line.setObjectName("gdrive_line")
+        self.verticalLayout_3.addWidget(self.gdrive_line)
+        self.thisPC = QtWidgets.QPushButton(self.graphics)
+        self.thisPC.setMinimumSize(QtCore.QSize(0, 45))
+        self.thisPC.setMaximumSize(QtCore.QSize(420, 45))
+        font = QtGui.QFont()
+        font.setFamily("Yu Gothic UI")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
+        self.thisPC.setFont(font)
+        self.thisPC.setStyleSheet("QPushButton{\n"
+                                  "color: white;\n"
+                                  "background: transparent;\n"
+                                  "text-align: left;    \n"
+                                  "padding-left: 10px;\n"
+                                  "}\n"
+                                  "\n"
+                                  "QPushButton::hover{\n"
+                                  "    color: white;\n"
+                                  "    background-color : rgba(255, 255  ,255 ,50);\n"
+                                  "\n"
+                                  "}\n"
+                                  "\n"
+                                  "QPushButton::pressed{\n"
+                                  "    background-color: rgba(255, 255, 255, 80)\n"
+                                  "}\n"
+                                  "")
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap("assets/resources/images/icons8-laptop-computer-25.png"), QtGui.QIcon.Normal,
+                        QtGui.QIcon.Off)
+        self.thisPC.setIcon(icon3)
+        self.thisPC.setIconSize(QtCore.QSize(25, 25))
+        self.thisPC.setObjectName("thisPC")
+        self.verticalLayout_3.addWidget(self.thisPC)
+        self.downloads = QtWidgets.QPushButton(self.graphics)
+        self.downloads.setMinimumSize(QtCore.QSize(0, 45))
+        self.downloads.setMaximumSize(QtCore.QSize(420, 45))
+        font = QtGui.QFont()
+        font.setFamily("Yu Gothic UI")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
+        self.downloads.setFont(font)
+        self.downloads.setStyleSheet("QPushButton{\n"
+                                     "color: white;\n"
+                                     "background: transparent;\n"
+                                     "text-align: left;    \n"
+                                     "padding-left: 10px;\n"
+                                     "}\n"
+                                     "\n"
+                                     "QPushButton::hover{\n"
+                                     "    color: white;\n"
+                                     "    background-color : rgba(255, 255  ,255 ,50);\n"
+                                     "\n"
+                                     "}\n"
+                                     "\n"
+                                     "QPushButton::pressed{\n"
+                                     "    background-color: rgba(255, 255, 255, 80)\n"
+                                     "}\n"
+                                     "")
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap("assets/resources/images/icons8-downloads-folder-25.png"), QtGui.QIcon.Normal,
+                        QtGui.QIcon.Off)
+        self.downloads.setIcon(icon4)
+        self.downloads.setIconSize(QtCore.QSize(25, 25))
+        self.downloads.setObjectName("downloads")
+        self.verticalLayout_3.addWidget(self.downloads)
+        self.pictures = QtWidgets.QPushButton(self.graphics)
+        self.pictures.setMinimumSize(QtCore.QSize(0, 45))
+        self.pictures.setMaximumSize(QtCore.QSize(420, 45))
+        font = QtGui.QFont()
+        font.setFamily("Yu Gothic UI")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
+        self.pictures.setFont(font)
+        self.pictures.setStyleSheet("QPushButton{\n"
+                                    "color: white;\n"
+                                    "background: transparent;\n"
+                                    "text-align: left;    \n"
+                                    "padding-left: 10px;\n"
+                                    "}\n"
+                                    "\n"
+                                    "QPushButton::hover{\n"
+                                    "    color: white;\n"
+                                    "    background-color : rgba(255, 255  ,255 ,50);\n"
+                                    "\n"
+                                    "}\n"
+                                    "\n"
+                                    "QPushButton::pressed{\n"
+                                    "    background-color: rgba(255, 255, 255, 80)\n"
+                                    "}\n"
+                                    "")
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap("assets/resources/images/picture25.png"), QtGui.QIcon.Normal,
+                        QtGui.QIcon.Off)
+        self.pictures.setIcon(icon5)
+        self.pictures.setIconSize(QtCore.QSize(25, 25))
+        self.pictures.setObjectName("pictures")
+        self.verticalLayout_3.addWidget(self.pictures)
+        self.videos = QtWidgets.QPushButton(self.graphics)
+        self.videos.setMinimumSize(QtCore.QSize(0, 45))
+        self.videos.setMaximumSize(QtCore.QSize(420, 45))
+        font = QtGui.QFont()
+        font.setFamily("Yu Gothic UI")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
+        self.videos.setFont(font)
+        self.videos.setStyleSheet("QPushButton{\n"
+                                  "color: white;\n"
+                                  "background: transparent;\n"
+                                  "text-align: left;    \n"
+                                  "padding-left: 10px;\n"
+                                  "}\n"
+                                  "\n"
+                                  "QPushButton::hover{\n"
+                                  "    color: white;\n"
+                                  "    background-color : rgba(255, 255  ,255 ,50);\n"
+                                  "\n"
+                                  "}\n"
+                                  "\n"
+                                  "QPushButton::pressed{\n"
+                                  "    background-color: rgba(255, 255, 255, 80)\n"
+                                  "}\n"
+                                  "")
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap("assets/resources/images/movie25.png"), QtGui.QIcon.Normal,
+                        QtGui.QIcon.Off)
+        self.videos.setIcon(icon6)
+        self.videos.setIconSize(QtCore.QSize(34, 34))
+        self.videos.setObjectName("videos")
+        self.verticalLayout_3.addWidget(self.videos)
+        self.music = QtWidgets.QPushButton(self.graphics)
+        self.music.setMinimumSize(QtCore.QSize(0, 45))
+        font = QtGui.QFont()
+        font.setFamily("Yu Gothic UI")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.music.setFont(font)
+        self.music.setStyleSheet("QPushButton{\n"
+                                 "color: white;\n"
+                                 "background: transparent;\n"
+                                 "text-align: left;    \n"
+                                 "padding-left: 10px;\n"
+                                 "}\n"
+                                 "\n"
+                                 "QPushButton::hover{\n"
+                                 "    color: white;\n"
+                                 "    background-color : rgba(255, 255  ,255 ,50);\n"
+                                 "\n"
+                                 "}\n"
+                                 "\n"
+                                 "QPushButton::pressed{\n"
+                                 "    background-color: rgba(255, 255, 255, 80)\n"
+                                 "}\n"
+                                 "")
+        icon7 = QtGui.QIcon()
+        icon7.addPixmap(QtGui.QPixmap("assets/resources/images/music25.png"), QtGui.QIcon.Normal,
+                        QtGui.QIcon.Off)
+        self.music.setIcon(icon7)
+        self.music.setIconSize(QtCore.QSize(25, 25))
+        self.music.setObjectName("music")
+        self.verticalLayout_3.addWidget(self.music)
+        self.documents = QtWidgets.QPushButton(self.graphics)
+        self.documents.setMinimumSize(QtCore.QSize(0, 45))
+        self.documents.setMaximumSize(QtCore.QSize(420, 16777215))
+        font = QtGui.QFont()
+        font.setFamily("Yu Gothic UI")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.documents.setFont(font)
+        self.documents.setStyleSheet("QPushButton{\n"
+                                     "color: white;\n"
+                                     "background: transparent;\n"
+                                     "text-align: left;    \n"
+                                     "padding-left: 10px;\n"
+                                     "}\n"
+                                     "\n"
+                                     "QPushButton::hover{\n"
+                                     "    color: white;\n"
+                                     "    background-color : rgba(255, 255  ,255 ,50);\n"
+                                     "\n"
+                                     "}\n"
+                                     "\n"
+                                     "QPushButton::pressed{\n"
+                                     "    background-color: rgba(255, 255, 255, 80)\n"
+                                     "}\n"
+                                     "")
+        icon8 = QtGui.QIcon()
+        icon8.addPixmap(QtGui.QPixmap("assets/resources/images/documents25.png"), QtGui.QIcon.Normal,
+                        QtGui.QIcon.Off)
+        self.documents.setIcon(icon8)
+        self.documents.setIconSize(QtCore.QSize(25, 25))
+        self.documents.setObjectName("documents")
+        self.verticalLayout_3.addWidget(self.documents)
+        spacerItem3 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_3.addItem(spacerItem3)
+        self.settings_line = QtWidgets.QFrame(self.graphics)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.settings_line.sizePolicy().hasHeightForWidth())
+        self.settings_line.setSizePolicy(sizePolicy)
+        self.settings_line.setMinimumSize(QtCore.QSize(378, 1))
+        self.settings_line.setMaximumSize(QtCore.QSize(16777215, 0))
+        self.settings_line.setStyleSheet("background-color: rgba(255, 255, 255, 80);\n"
+                                         "color: rgba(255, 255, 255, 80);\n"
+                                         "margin-left: 15px;\n"
+                                         "margin-right: 25px;")
+        self.settings_line.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.settings_line.setLineWidth(1)
+        self.settings_line.setMidLineWidth(1)
+        self.settings_line.setFrameShape(QtWidgets.QFrame.HLine)
+        self.settings_line.setObjectName("settings_line")
+        self.verticalLayout_3.addWidget(self.settings_line, 0, QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
+        self.settings = QtWidgets.QPushButton(self.graphics)
+        self.settings.setMinimumSize(QtCore.QSize(0, 45))
+        font = QtGui.QFont()
+        font.setFamily("Yu Gothic UI")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
+        self.settings.setFont(font)
+        self.settings.setStyleSheet("QPushButton{\n"
+                                    "color: white;\n"
+                                    "background: transparent;\n"
+                                    "text-align: left;    \n"
+                                    "padding-left: 10px;\n"
+                                    "}\n"
+                                    "\n"
+                                    "QPushButton::hover{\n"
+                                    "    color: white;\n"
+                                    "    background-color : rgba(255, 255  ,255 ,50);\n"
+                                    "\n"
+                                    "}\n"
+                                    "\n"
+                                    "QPushButton::pressed{\n"
+                                    "    background-color: rgba(255, 255, 255, 80)\n"
+                                    "}\n"
+                                    "")
+        icon9 = QtGui.QIcon()
+        icon9.addPixmap(QtGui.QPixmap("assets/resources/images/icons8-window-settings-25.png"), QtGui.QIcon.Normal,
+                        QtGui.QIcon.Off)
+        self.settings.setIcon(icon9)
+        self.settings.setIconSize(QtCore.QSize(34, 34))
+        self.settings.setObjectName("settings")
+        self.verticalLayout_3.addWidget(self.settings)
+        self.horizontalLayout_2.addLayout(self.verticalLayout_3)
+        self.gridLayout_5.addWidget(self.graphics, 0, 0, 1, 1)
+        self.line_2 = QtWidgets.QFrame(self.all_frame)
+        self.line_2.setMaximumSize(QtCore.QSize(1, 16777215))
+        self.line_2.setStyleSheet("background-color:  rgba(255, 255, 255, 30);\n"
+                                  "color: rgba(255, 255, 255, 30);\n"
+                                  "margin-left: 15px;\n"
+                                  "margin-right: 15px;")
+        self.line_2.setFrameShape(QtWidgets.QFrame.VLine)
+        self.line_2.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_2.setObjectName("line_2")
+        self.gridLayout_5.addWidget(self.line_2, 0, 1, 1, 1)
+        self.main_layout.addLayout(self.gridLayout_5)
+        self.window_frame = QtWidgets.QFrame(self.all_frame)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.window_frame.sizePolicy().hasHeightForWidth())
+        self.window_frame.setSizePolicy(sizePolicy)
+        self.window_frame.setStyleSheet("background: rgba(0, 0, 0, 60);")
+        self.window_frame.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.window_frame.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.window_frame.setLineWidth(0)
+        self.window_frame.setObjectName("window_frame")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.window_frame)
+        self.verticalLayout.setContentsMargins(-1, -1, 0, 0)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_5.setObjectName("horizontalLayout_5")
+        self.pushButton = QtWidgets.QPushButton(self.window_frame)
+        self.pushButton.setStyleSheet("background: transparent;")
+        self.pushButton.setText("")
+        icon10 = QtGui.QIcon()
+        icon10.addPixmap(QtGui.QPixmap("assets/resources/images/icons8-back-25.png"), QtGui.QIcon.Normal,
+                         QtGui.QIcon.Off)
+        self.pushButton.setIcon(icon10)
+        self.pushButton.setIconSize(QtCore.QSize(30, 25))
+        self.pushButton.setObjectName("pushButton")
+        self.horizontalLayout_5.addWidget(self.pushButton)
+        self.pushButton_4 = QtWidgets.QPushButton(self.window_frame)
+        self.pushButton_4.setStyleSheet("background: transparent;")
+        self.pushButton_4.setText("")
+        icon11 = QtGui.QIcon()
+        icon11.addPixmap(QtGui.QPixmap("assets/resources/images/icons8-forward-25.png"), QtGui.QIcon.Normal,
+                         QtGui.QIcon.Off)
+        icon11.addPixmap(QtGui.QPixmap("assets/resources/images/icons8-forward-25 (1).png"), QtGui.QIcon.Disabled,
+                         QtGui.QIcon.On)
+        self.pushButton_4.setIcon(icon11)
+        self.pushButton_4.setIconSize(QtCore.QSize(30, 20))
+        self.pushButton_4.setObjectName("pushButton_4")
+        self.horizontalLayout_5.addWidget(self.pushButton_4)
+        self.line_3 = QtWidgets.QFrame(self.window_frame)
+        self.line_3.setMaximumSize(QtCore.QSize(1, 16777215))
+        self.line_3.setStyleSheet("background-color: rgba(255, 255, 255, 80);\n"
+                                  "color: rgba(255, 255, 255, 80);\n"
+                                  "margin-left: 15px;\n"
+                                  "margin-right: 25px;")
+        self.line_3.setFrameShape(QtWidgets.QFrame.VLine)
+        self.line_3.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_3.setObjectName("line_3")
+        self.horizontalLayout_5.addWidget(self.line_3)
+        self.pushButton_2 = QtWidgets.QPushButton(self.window_frame)
+        self.pushButton_2.setStyleSheet("background: transparent;n")
+        self.pushButton_2.setText("")
+        icon12 = QtGui.QIcon()
+        icon12.addPixmap(QtGui.QPixmap("assets/resources/images/icons8-up-arrow-25 (1).png"), QtGui.QIcon.Normal,
+                         QtGui.QIcon.Off)
+        icon12.addPixmap(QtGui.QPixmap("assets/resources/images/icons8-up-arrow-25 (2).png"), QtGui.QIcon.Disabled,
+                         QtGui.QIcon.On)
+        self.pushButton_2.setIcon(icon12)
+        self.pushButton_2.setIconSize(QtCore.QSize(30, 18))
+        self.pushButton_2.setObjectName("pushButton_2")
+        self.horizontalLayout_5.addWidget(self.pushButton_2)
+        self.pushButton_3 = QtWidgets.QPushButton(self.window_frame)
+        self.pushButton_3.setStyleSheet("background: transparent;")
+        self.pushButton_3.setText("")
+        icon13 = QtGui.QIcon()
+        icon13.addPixmap(QtGui.QPixmap("assets/resources/images/icons8-refresh-30.png"), QtGui.QIcon.Normal,
+                         QtGui.QIcon.Off)
+        icon13.addPixmap(QtGui.QPixmap("assets/resources/images/icons8-refresh-30 (1).png"), QtGui.QIcon.Disabled,
+                         QtGui.QIcon.On)
+        self.pushButton_3.setIcon(icon13)
+        self.pushButton_3.setIconSize(QtCore.QSize(30, 20))
+        self.pushButton_3.setObjectName("pushButton_3")
+        self.horizontalLayout_5.addWidget(self.pushButton_3)
+        self.path = QtWidgets.QLineEdit(self.window_frame)
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(11)
+        font.setBold(False)
+        font.setWeight(50)
+        self.path.setFont(font)
+        self.path.setStyleSheet("QLineEdit {\n"
+                                "   color: white;\n"
+                                "   border-radius: 5px;\n"
+                                "   border: 2px solid rgb(91, 101, 124);\n"
+                                "   padding-left: 10px;\n"
+                                "   selection-color: rgb(255, 255, 255);\n"
+                                "   selection-background-color: rgb(255, 121, 198);\n"
+                                "   \n"
+                                "}\n"
+                                "\n"
+                                "QLineEdit:hover {\n"
+                                "   border: 2px solid rgb(64, 71, 88);\n"
+                                "    background-color: rgba(255, 255, 255, 30);\n"
+                                "}\n"
+                                "\n"
+                                "QLineEdit:focus {\n"
+                                "  border: 2px solid rgb(91, 101, 124);\n"
+                                "}")
+        self.path.setText("")
+        self.path.setClearButtonEnabled(True)
+        self.path.setObjectName("path")
+        self.horizontalLayout_5.addWidget(self.path)
+        self.minimize = QtWidgets.QPushButton(self.window_frame)
+        self.minimize.setStyleSheet("QPushButton{\n"
+                                    "color: white;\n"
+                                    "background: transparent;\n"
+                                    "\n"
+                                    "}\n"
+                                    "\n"
+                                    "QPushButton::hover{\n"
+                                    "    color: white;\n"
+                                    "    background-color : rgba(255, 255  ,255 ,50);\n"
+                                    "    border: 200px;\n"
+                                    "    \n"
+                                    "}\n"
+                                    "\n"
+                                    "QPushButton::pressed{\n"
+                                    "    background-color: rgba(255, 255, 255, 80)\n"
+                                    "}\n"
+                                    "")
+        self.minimize.setText("")
+        icon14 = QtGui.QIcon()
+        icon14.addPixmap(
+            QtGui.QPixmap("assets/resources/images/minimize.png"),
+            QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.minimize.setIcon(icon14)
+        self.minimize.setObjectName("minimize")
+        self.horizontalLayout_5.addWidget(self.minimize)
+        self.maximize = QtWidgets.QPushButton(self.window_frame)
+        self.maximize.setStyleSheet("QPushButton{\n"
+                                    "color: white;\n"
+                                    "background: transparent;\n"
+                                    "}\n"
+                                    "\n"
+                                    "QPushButton::hover{\n"
+                                    "    color: white;\n"
+                                    "    background-color : rgba(255, 255  ,255 ,50);\n"
+                                    "\n"
+                                    "}\n"
+                                    "\n"
+                                    "QPushButton::pressed{\n"
+                                    "    background-color: rgba(255, 255, 255, 80)\n"
+                                    "}\n"
+                                    "")
+        self.maximize.setText("")
+        icon15 = QtGui.QIcon()
+        icon15.addPixmap(
+            QtGui.QPixmap("assets/resources/images/estore.png"),
+            QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.maximize.setIcon(icon15)
+        self.maximize.setObjectName("maximize")
+        self.horizontalLayout_5.addWidget(self.maximize)
+        self.close = QtWidgets.QPushButton(self.window_frame)
+        self.close.setStyleSheet("QPushButton{\n"
+                                 "color: white;\n"
+                                 "background: transparent;\n"
+                                 "}\n"
+                                 "\n"
+                                 "QPushButton::hover{\n"
+                                 "    color: white;\n"
+                                 "    background-color : rgba(255, 255  ,255 ,50);\n"
+                                 "\n"
+                                 "}\n"
+                                 "\n"
+                                 "QPushButton::pressed{\n"
+                                 "    background-color: rgba(255, 255, 255, 80)\n"
+                                 "}\n"
+                                 "")
+        self.close.setText("")
+        icon16 = QtGui.QIcon()
+        icon16.addPixmap(QtGui.QPixmap("assets/resources/images/close.png"),
+                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.close.setIcon(icon16)
+        self.close.setObjectName("close")
+        self.horizontalLayout_5.addWidget(self.close)
+        spacerItem4 = QtWidgets.QSpacerItem(5, 5, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_5.addItem(spacerItem4)
+        self.verticalLayout.addLayout(self.horizontalLayout_5)
+        self.main_stacked_widget = QtWidgets.QStackedWidget(self.window_frame)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.main_stacked_widget.sizePolicy().hasHeightForWidth())
+        self.main_stacked_widget.setSizePolicy(sizePolicy)
+        self.main_stacked_widget.setStyleSheet("background: transparent;")
+        self.main_stacked_widget.setObjectName("main_stacked_widget")
+        self.main_pages = QtWidgets.QWidget()
+        self.main_pages.setObjectName("main_pages")
+        self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.main_pages)
+        self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_6.setSpacing(0)
+        self.verticalLayout_6.setObjectName("verticalLayout_6")
+        self.main_frame = QtWidgets.QFrame(self.main_pages)
+        self.main_frame.setStyleSheet("background: transparent;")
+        self.main_frame.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.main_frame.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.main_frame.setObjectName("main_frame")
+        self.gridLayout_2 = QtWidgets.QGridLayout(self.main_frame)
+        self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_2.setObjectName("gridLayout_2")
+        self.tabWidget = QtWidgets.QTabWidget(self.main_frame)
+        self.tabWidget.setMinimumSize(QtCore.QSize(600, 700))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(8)
+        font.setBold(True)
+        font.setWeight(75)
+        self.tabWidget.setFont(font)
+        self.tabWidget.setStyleSheet("\n"
+                                     "QTabBar::tab {\n"
+                                     "    background-color: rgba(255, 255, 255, 30);\n"
+                                     "    color: white;\n"
+                                     "    padding: 8px;\n"
+                                     "    border-radius: 7px;\n"
+                                     "    margin: 2px;\n"
+                                     "}\n"
+                                     "\n"
+                                     "QTabBar::tab:hover {\n"
+                                     "    background-color: rgba(0, 0, 0, 70);\n"
+                                     "    color: white;\n"
+                                     "    padding: 4px;\n"
+                                     "    border-radius: 7px;\n"
+                                     "    margin: 2px;\n"
+                                     "}\n"
+                                     "\n"
+                                     "QTabBar::close-button{\n"
+                                     "   margin-right: 10px;\n"
+                                     "   image: url(\'assets/resources/images/close.png\')\n"
+                                     "}\n"
+                                     "\n"
+                                     "\n"
+                                     "")
+        self.tabWidget.setTabShape(QtWidgets.QTabWidget.Rounded)
+        self.tabWidget.setIconSize(QtCore.QSize(20, 20))
+        self.tabWidget.setDocumentMode(True)
+        self.tabWidget.setTabsClosable(True)
+        self.tabWidget.setMovable(True)
+        self.tabWidget.setTabBarAutoHide(True)
+        self.tabWidget.setObjectName("tabWidget")
+        self.this_pc_2 = QtWidgets.QWidget()
+        self.this_pc_2.setObjectName("this_pc_2")
+        self.gridLayout_4 = QtWidgets.QGridLayout(self.this_pc_2)
+        self.gridLayout_4.setVerticalSpacing(0)
+        self.gridLayout_4.setObjectName("gridLayout_4")
+        self.this_pc_label = QtWidgets.QPushButton(self.this_pc_2)
+        self.this_pc_label.setMinimumSize(QtCore.QSize(0, 0))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(28)
+        font.setBold(True)
+        font.setWeight(75)
+        self.this_pc_label.setFont(font)
+        self.this_pc_label.setStyleSheet("color: white;\n"
+                                         "padding-top: 5px;")
+        self.this_pc_label.setObjectName("this_pc_label")
+        self.gridLayout_4.addWidget(self.this_pc_label, 0, 0, 1, 1)
+        self.library_layout = QtWidgets.QGridLayout()
+        self.library_layout.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
+        self.library_layout.setSpacing(4)
+        self.library_layout.setObjectName("library_layout")
+        self.gridLayout_4.addLayout(self.library_layout, 4, 0, 1, 1)
+        spacerItem5 = QtWidgets.QSpacerItem(20, 25, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.gridLayout_4.addItem(spacerItem5, 2, 0, 1, 1)
+        spacerItem6 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_4.addItem(spacerItem6, 9, 0, 1, 1)
+        self.pushButton_6 = QtWidgets.QPushButton(self.this_pc_2)
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(14)
+        self.pushButton_6.setFont(font)
+        self.pushButton_6.setStyleSheet(
+            "color: white; background: transparent; text-align: left; margin-left: 7px; margin-bottom: 12px; margin-top: 15px;")
+        self.pushButton_6.setObjectName("pushButton_6")
+        self.gridLayout_4.addWidget(self.pushButton_6, 5, 0, 1, 1)
+        self.pushButton_5 = QtWidgets.QPushButton(self.this_pc_2)
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(14)
+        font.setBold(False)
+        font.setWeight(50)
+        self.pushButton_5.setFont(font)
+        self.pushButton_5.setStyleSheet(
+            "color: white; background: transparent; text-align: left; margin-left: 7px; margin-bottom: 12px;")
+        self.pushButton_5.setObjectName("pushButton_5")
+        self.gridLayout_4.addWidget(self.pushButton_5, 3, 0, 1, 1)
+        self.drives_layout = QtWidgets.QGridLayout()
+        self.drives_layout.setObjectName("drives_layout")
+        self.gridLayout_4.addLayout(self.drives_layout, 6, 0, 1, 1)
+        self.tabWidget.addTab(self.this_pc_2, "")
+        self.downloads_tab = QtWidgets.QWidget()
+        self.downloads_tab.setObjectName("downloads_tab")
+        self.verticalLayout_7 = QtWidgets.QVBoxLayout(self.downloads_tab)
+        self.verticalLayout_7.setObjectName("verticalLayout_7")
+        self.verticalLayout_5 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_5.setSpacing(0)
+        self.verticalLayout_5.setObjectName("verticalLayout_5")
+        self.downloads_frame = QtWidgets.QFrame(self.downloads_tab)
+        self.downloads_frame.setMinimumSize(QtCore.QSize(580, 654))
+        self.downloads_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.downloads_frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.downloads_frame.setObjectName("downloads_frame")
+        self.verticalLayout_10 = QtWidgets.QVBoxLayout(self.downloads_frame)
+        self.verticalLayout_10.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_10.setSpacing(0)
+        self.verticalLayout_10.setObjectName("verticalLayout_10")
+        self.downloads_label = QtWidgets.QPushButton(self.downloads_frame)
+        self.downloads_label.setMinimumSize(QtCore.QSize(0, 0))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(28)
+        font.setBold(True)
+        font.setWeight(75)
+        self.downloads_label.setFont(font)
+        self.downloads_label.setStyleSheet("color: white;\n"
+                                           "padding-top: 5px;")
+        self.downloads_label.setObjectName("downloads_label")
+        self.verticalLayout_10.addWidget(self.downloads_label)
+        self.downloads_layout = QtWidgets.QVBoxLayout()
+        self.downloads_layout.setObjectName("downloads_layout")
+        self.verticalLayout_10.addLayout(self.downloads_layout)
+        self.verticalLayout_5.addWidget(self.downloads_frame)
+        self.verticalLayout_7.addLayout(self.verticalLayout_5)
+        self.tabWidget.addTab(self.downloads_tab, "")
+        self.music_tab = QtWidgets.QWidget()
+        self.music_tab.setObjectName("music_tab")
+        self.gridLayout_9 = QtWidgets.QGridLayout(self.music_tab)
+        self.gridLayout_9.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_9.setSpacing(0)
+        self.gridLayout_9.setObjectName("gridLayout_9")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.music_frame = QtWidgets.QFrame(self.music_tab)
+        self.music_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.music_frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.music_frame.setObjectName("music_frame")
+        self.verticalLayout_8 = QtWidgets.QVBoxLayout(self.music_frame)
+        self.verticalLayout_8.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_8.setObjectName("verticalLayout_8")
+        self.this_pc_label_2 = QtWidgets.QPushButton(self.music_frame)
+        self.this_pc_label_2.setMinimumSize(QtCore.QSize(0, 0))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(28)
+        font.setBold(True)
+        font.setWeight(75)
+        self.this_pc_label_2.setFont(font)
+        self.this_pc_label_2.setStyleSheet("color: white;\n"
+                                           "padding-top: 5px;")
+        self.this_pc_label_2.setObjectName("this_pc_label_2")
+        self.verticalLayout_8.addWidget(self.this_pc_label_2)
+        self.gridLayout_10 = QtWidgets.QGridLayout()
+        self.gridLayout_10.setObjectName("gridLayout_10")
+        self.verticalLayout_15 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_15.setObjectName("verticalLayout_15")
+        self.songs_frane = QtWidgets.QFrame(self.music_frame)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.songs_frane.sizePolicy().hasHeightForWidth())
+        self.songs_frane.setSizePolicy(sizePolicy)
+        self.songs_frane.setMinimumSize(QtCore.QSize(300, 0))
+        self.songs_frane.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.songs_frane.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.songs_frane.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.songs_frane.setObjectName("songs_frane")
+        self.verticalLayout_18 = QtWidgets.QVBoxLayout(self.songs_frane)
+        self.verticalLayout_18.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_18.setSpacing(0)
+        self.verticalLayout_18.setObjectName("verticalLayout_18")
+        self.songs_layout = QtWidgets.QVBoxLayout()
+        self.songs_layout.setObjectName("songs_layout")
+        self.songs_scroll = QtWidgets.QScrollBar(self.songs_frane)
+        self.songs_scroll.setOrientation(QtCore.Qt.Vertical)
+        self.songs_scroll.setObjectName("songs_scroll")
+        self.songs_layout.addWidget(self.songs_scroll)
+        self.verticalLayout_18.addLayout(self.songs_layout)
+        self.verticalLayout_15.addWidget(self.songs_frane)
+        self.gridLayout_10.addLayout(self.verticalLayout_15, 0, 0, 1, 1)
+        self.verticalLayout_16 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_16.setObjectName("verticalLayout_16")
+        self.preview_frame = QtWidgets.QFrame(self.music_frame)
+        self.preview_frame.setMinimumSize(QtCore.QSize(200, 0))
+        self.preview_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.preview_frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.preview_frame.setObjectName("preview_frame")
+        self.verticalLayout_20 = QtWidgets.QVBoxLayout(self.preview_frame)
+        self.verticalLayout_20.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_20.setSpacing(0)
+        self.verticalLayout_20.setObjectName("verticalLayout_20")
+        self.preview_layout = QtWidgets.QVBoxLayout()
+        self.preview_layout.setObjectName("preview_layout")
+        self.verticalLayout_20.addLayout(self.preview_layout)
+        self.verticalLayout_16.addWidget(self.preview_frame)
+        self.gridLayout_10.addLayout(self.verticalLayout_16, 0, 1, 1, 1)
+        self.verticalLayout_8.addLayout(self.gridLayout_10)
+        self.verticalLayout_2.addWidget(self.music_frame)
+        self.gridLayout_9.addLayout(self.verticalLayout_2, 0, 0, 1, 1)
+        self.tabWidget.addTab(self.music_tab, "")
+        self.settings1 = QtWidgets.QWidget()
+        self.settings1.setObjectName("settings1")
+        self.gridLayout_8 = QtWidgets.QGridLayout(self.settings1)
+        self.gridLayout_8.setContentsMargins(0, -1, 0, 0)
+        self.gridLayout_8.setObjectName("gridLayout_8")
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_3.setSpacing(0)
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.settings_3 = QtWidgets.QFrame(self.settings1)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.settings_3.sizePolicy().hasHeightForWidth())
+        self.settings_3.setSizePolicy(sizePolicy)
+        self.settings_3.setMinimumSize(QtCore.QSize(240, 0))
+        self.settings_3.setStyleSheet("")
+        self.settings_3.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.settings_3.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.settings_3.setLineWidth(1)
+        self.settings_3.setMidLineWidth(1)
+        self.settings_3.setObjectName("settings_3")
+        self.verticalLayout_23 = QtWidgets.QVBoxLayout(self.settings_3)
+        self.verticalLayout_23.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_23.setSpacing(0)
+        self.verticalLayout_23.setObjectName("verticalLayout_23")
+        self.verticalLayout_24 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_24.setSpacing(0)
+        self.verticalLayout_24.setObjectName("verticalLayout_24")
+        spacerItem7 = QtWidgets.QSpacerItem(20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.verticalLayout_24.addItem(spacerItem7)
+        self.settings_button = QtWidgets.QPushButton(self.settings_3)
+        self.settings_button.setMinimumSize(QtCore.QSize(0, 0))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(20)
+        font.setBold(True)
+        font.setWeight(75)
+        self.settings_button.setFont(font)
+        self.settings_button.setStyleSheet("color: white; background: transparent;")
+        icon17 = QtGui.QIcon()
+        icon17.addPixmap(
+            QtGui.QPixmap("assets/resources/images/settings.png"),
+            QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.settings_button.setIcon(icon17)
+        self.settings_button.setIconSize(QtCore.QSize(45, 45))
+        self.settings_button.setCheckable(False)
+        self.settings_button.setObjectName("settings_button")
+        self.verticalLayout_24.addWidget(self.settings_button)
+        spacerItem8 = QtWidgets.QSpacerItem(20, 15, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.verticalLayout_24.addItem(spacerItem8)
+        self.appearance = QtWidgets.QPushButton(self.settings_3)
+        self.appearance.setMinimumSize(QtCore.QSize(0, 45))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(11)
+        self.appearance.setFont(font)
+        self.appearance.setStyleSheet("QPushButton{\n"
+                                      "color: white;\n"
+                                      "background: transparent;\n"
+                                      "padding-left: 10px;\n"
+                                      "}\n"
+                                      "\n"
+                                      "QPushButton::hover{\n"
+                                      "    color: white;\n"
+                                      "    background-color : rgba(255, 255  ,255 ,50);\n"
+                                      "\n"
+                                      "}\n"
+                                      "\n"
+                                      "QPushButton::pressed{\n"
+                                      "    background-color: rgba(255, 255, 255, 80)\n"
+                                      "}\n"
+                                      "")
+        icon18 = QtGui.QIcon()
+        icon18.addPixmap(QtGui.QPixmap("assets/resources/images/appearance.png"),
+                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.appearance.setIcon(icon18)
+        self.appearance.setIconSize(QtCore.QSize(35, 35))
+        self.appearance.setObjectName("appearance")
+        self.verticalLayout_24.addWidget(self.appearance)
+        self.passwords = QtWidgets.QPushButton(self.settings_3)
+        self.passwords.setMinimumSize(QtCore.QSize(0, 45))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(11)
+        self.passwords.setFont(font)
+        self.passwords.setStyleSheet("QPushButton{\n"
+                                     "color: white;\n"
+                                     "background: transparent;\n"
+                                     "padding-left: 10px;\n"
+                                     "}\n"
+                                     "\n"
+                                     "QPushButton::hover{\n"
+                                     "    color: white;\n"
+                                     "    background-color : rgba(255, 255  ,255 ,50);\n"
+                                     "\n"
+                                     "}\n"
+                                     "\n"
+                                     "QPushButton::pressed{\n"
+                                     "    background-color: rgba(255, 255, 255, 80)\n"
+                                     "}\n"
+                                     "")
+        icon19 = QtGui.QIcon()
+        icon19.addPixmap(QtGui.QPixmap("assets/resources/images/icons8-orthogonal-view-25.png"), QtGui.QIcon.Normal,
+                         QtGui.QIcon.Off)
+        self.passwords.setIcon(icon19)
+        self.passwords.setIconSize(QtCore.QSize(35, 35))
+        self.passwords.setObjectName("passwords")
+        self.verticalLayout_24.addWidget(self.passwords)
+        self.startup = QtWidgets.QPushButton(self.settings_3)
+        self.startup.setMinimumSize(QtCore.QSize(0, 45))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(11)
+        self.startup.setFont(font)
+        self.startup.setStyleSheet("QPushButton{\n"
+                                   "color: white;\n"
+                                   "background: transparent;\n"
+                                   "padding-left: 10px;\n"
+                                   "}\n"
+                                   "\n"
+                                   "QPushButton::hover{\n"
+                                   "    color: white;\n"
+                                   "    background-color : rgba(255, 255  ,255 ,50);\n"
+                                   "\n"
+                                   "}\n"
+                                   "\n"
+                                   "QPushButton::pressed{\n"
+                                   "    background-color: rgba(255, 255, 255, 80)\n"
+                                   "}\n"
+                                   "")
+        icon20 = QtGui.QIcon()
+        icon20.addPixmap(QtGui.QPixmap(""
+                                       "assets/resources/images/startup.png"),
+                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.startup.setIcon(icon20)
+        self.startup.setIconSize(QtCore.QSize(35, 35))
+        self.startup.setObjectName("startup")
+        self.verticalLayout_24.addWidget(self.startup)
+        self.controller = QtWidgets.QPushButton(self.settings_3)
+        self.controller.setMinimumSize(QtCore.QSize(0, 45))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(11)
+        self.controller.setFont(font)
+        self.controller.setStyleSheet("QPushButton{\n"
+                                      "color: white;\n"
+                                      "background: transparent;\n"
+                                      "padding-left: 10px;\n"
+                                      "}\n"
+                                      "\n"
+                                      "QPushButton::hover{\n"
+                                      "    color: white;\n"
+                                      "    background-color : rgba(255, 255  ,255 ,50);\n"
+                                      "\n"
+                                      "}\n"
+                                      "\n"
+                                      "QPushButton::pressed{\n"
+                                      "    background-color: rgba(255, 255, 255, 80)\n"
+                                      "}\n"
+                                      "")
+        icon21 = QtGui.QIcon()
+        icon21.addPixmap(QtGui.QPixmap("assets/resources/images/icons8-load-resume-template-25.png"),
+                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.controller.setIcon(icon21)
+        self.controller.setIconSize(QtCore.QSize(35, 35))
+        self.controller.setObjectName("controller")
+        self.verticalLayout_24.addWidget(self.controller)
+        self.hidden_files = QtWidgets.QPushButton(self.settings_3)
+        self.hidden_files.setMinimumSize(QtCore.QSize(0, 45))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(11)
+        font.setBold(False)
+        font.setWeight(50)
+        self.hidden_files.setFont(font)
+        self.hidden_files.setStyleSheet("QPushButton{\n"
+                                        "color: white;\n"
+                                        "background: transparent;\n"
+                                        "padding-left: 10px;\n"
+                                        "}\n"
+                                        "\n"
+                                        "QPushButton::hover{\n"
+                                        "    color: white;\n"
+                                        "    background-color : rgba(255, 255  ,255 ,50);\n"
+                                        "\n"
+                                        "}\n"
+                                        "\n"
+                                        "QPushButton::pressed{\n"
+                                        "    background-color: rgba(255, 255, 255, 80)\n"
+                                        "}\n"
+                                        "")
+        icon22 = QtGui.QIcon()
+        icon22.addPixmap(QtGui.QPixmap("assets/resources/images/icons8-show-non-hidden-views-35.png"),
+                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.hidden_files.setIcon(icon22)
+        self.hidden_files.setIconSize(QtCore.QSize(30, 30))
+        self.hidden_files.setObjectName("hidden_files")
+        self.verticalLayout_24.addWidget(self.hidden_files)
+        spacerItem9 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_24.addItem(spacerItem9)
+        self.line_4 = QtWidgets.QFrame(self.settings_3)
+        self.line_4.setMaximumSize(QtCore.QSize(16777215, 1))
+        self.line_4.setStyleSheet("background-color: rgba(255, 255, 255, 80);\n"
+                                  "color: rgba(255, 255, 255, 80);\n"
+                                  "margin-left: 15px;\n"
+                                  "margin-right: 25px;")
+        self.line_4.setFrameShape(QtWidgets.QFrame.HLine)
+        self.line_4.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_4.setObjectName("line_4")
+        self.verticalLayout_24.addWidget(self.line_4)
+        self.feedback = QtWidgets.QPushButton(self.settings_3)
+        self.feedback.setMinimumSize(QtCore.QSize(0, 45))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(11)
+        font.setBold(False)
+        font.setWeight(50)
+        self.feedback.setFont(font)
+        self.feedback.setStyleSheet("QPushButton{\n"
+                                    "color: white;\n"
+                                    "background: transparent;\n"
+                                    "}\n"
+                                    "\n"
+                                    "QPushButton::hover{\n"
+                                    "    color: white;\n"
+                                    "    background-color : rgba(255, 255  ,255 ,50);\n"
+                                    "\n"
+                                    "}\n"
+                                    "\n"
+                                    "QPushButton::pressed{\n"
+                                    "    background-color: rgba(255, 255, 255, 80)\n"
+                                    "}\n"
+                                    "")
+        icon23 = QtGui.QIcon()
+        icon23.addPixmap(QtGui.QPixmap("assets/resources/images/feedback.png"),
+                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.feedback.setIcon(icon23)
+        self.feedback.setIconSize(QtCore.QSize(30, 30))
+        self.feedback.setObjectName("feedback")
+        self.verticalLayout_24.addWidget(self.feedback, 0, QtCore.Qt.AlignBottom)
+        self.verticalLayout_23.addLayout(self.verticalLayout_24)
+        self.horizontalLayout_3.addWidget(self.settings_3)
+        self.gridLayout_8.addLayout(self.horizontalLayout_3, 0, 0, 1, 1)
+        self.stackedWidget = QtWidgets.QStackedWidget(self.settings1)
+        self.stackedWidget.setObjectName("stackedWidget")
+        self.appearance_2 = QtWidgets.QWidget()
+        self.appearance_2.setObjectName("appearance_2")
+        self.horizontalLayout_6 = QtWidgets.QHBoxLayout(self.appearance_2)
+        self.horizontalLayout_6.setObjectName("horizontalLayout_6")
+        self.appearance_frame = QtWidgets.QFrame(self.appearance_2)
+        self.appearance_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.appearance_frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.appearance_frame.setObjectName("appearance_frame")
+        self.verticalLayout_9 = QtWidgets.QVBoxLayout(self.appearance_frame)
+        self.verticalLayout_9.setObjectName("verticalLayout_9")
+        self.appearance_label = QtWidgets.QPushButton(self.appearance_frame)
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(20)
+        font.setBold(True)
+        font.setWeight(75)
+        self.appearance_label.setFont(font)
+        self.appearance_label.setStyleSheet("color: white; background: transparent;")
+        icon24 = QtGui.QIcon()
+        icon24.addPixmap(
+            QtGui.QPixmap("assets/resources/images/appearance.png"),
+            QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.appearance_label.setIcon(icon24)
+        self.appearance_label.setIconSize(QtCore.QSize(35, 35))
+        self.appearance_label.setObjectName("appearance_label")
+        self.verticalLayout_9.addWidget(self.appearance_label, 0, QtCore.Qt.AlignTop)
+        self.effect_label = QtWidgets.QLabel(self.appearance_frame)
+        font = QtGui.QFont()
+        font.setFamily("Segoe MVR MDL2 Animation")
+        font.setPointSize(14)
+        self.effect_label.setFont(font)
+        self.effect_label.setStyleSheet("color: white;\n"
+                                        "margin-top: 10px;")
+        self.effect_label.setObjectName("effect_label")
+        self.verticalLayout_9.addWidget(self.effect_label)
+        self.verticalLayout_11 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_11.setContentsMargins(40, -1, -1, -1)
+        self.verticalLayout_11.setObjectName("verticalLayout_11")
+        spacerItem10 = QtWidgets.QSpacerItem(20, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.verticalLayout_11.addItem(spacerItem10)
+        self.effect_radiobutton = QtWidgets.QRadioButton(self.appearance_frame)
+        self.effect_radiobutton.setMinimumSize(QtCore.QSize(0, 35))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(11)
+        font.setItalic(False)
+        self.effect_radiobutton.setFont(font)
+        self.effect_radiobutton.setStyleSheet("QRadioButton{\n"
+                                              "    color: white;\n"
+                                              "}\n"
+                                              "\n"
+                                              "QRadioButton::indicator {\n"
+                                              "    border: 3px solid rgb(52, 59, 72);\n"
+                                              "    width: 15px;\n"
+                                              "    color: white; \n"
+                                              "    text-align: center;\n"
+                                              "    height: 15px;\n"
+                                              "    border-radius: 10px;\n"
+                                              "    background: rgb(44, 49, 60);\n"
+                                              "}\n"
+                                              "QRadioButton::indicator:hover {\n"
+                                              "     border: 3px solid rgb(58, 66, 81);\n"
+                                              "}\n"
+                                              "QRadioButton::indicator:checked {\n"
+                                              "    background: 3px solid rgb(94, 106, 130);\n"
+                                              "    border: 3px solid rgb(52, 59, 72);\n"
+                                              "}")
+        self.effect_radiobutton.setObjectName("effect_radiobutton")
+        self.verticalLayout_11.addWidget(self.effect_radiobutton)
+        self.theme_box = QtWidgets.QComboBox(self.appearance_frame)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.theme_box.sizePolicy().hasHeightForWidth())
+        self.theme_box.setSizePolicy(sizePolicy)
+        self.theme_box.setMinimumSize(QtCore.QSize(200, 35))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(12)
+        self.theme_box.setFont(font)
+        self.theme_box.setStyleSheet("QComboBox{\n"
+                                     "   background-color: rgba(27, 29, 35, 40);\n"
+                                     "   border-radius: 5px;\n"
+                                     "  border: 2px solid rgb(33, 37, 43);\n"
+                                     "  padding: 5px;\n"
+                                     "color: white;\n"
+                                     " padding-left: 10px;\n"
+                                     "}\n"
+                                     "QComboBox:hover{\n"
+                                     "   border: 2px solid rgb(64, 71, 88);\n"
+                                     "}\n"
+                                     "QComboBox::drop-down {\n"
+                                     "   subcontrol-origin: padding;\n"
+                                     "  subcontrol-position: top right;\n"
+                                     "  width: 25px; \n"
+                                     "  border-left-width: 3px;\n"
+                                     " border-left-color: rgba(39, 44, 54, 150);\n"
+                                     "    border-left-style: solid;\n"
+                                     "  border-top-right-radius: 3px;\n"
+                                     "  border-bottom-right-radius: 3px;\n"
+                                     "  background-image: url(assets/resources/images/arror.png);\n"
+                                     " background-position: center;\n"
+                                     " background-repeat: no-reperat;\n"
+                                     "}\n"
+                                     "QComboBox QAbstractItemView {\n"
+                                     "  color: rgb(255, 121, 198);\n"
+                                     "   background-color: rgb(33, 37, 43);\n"
+                                     "   padding: 10px;\n"
+                                     "   selection-background-color: rgb(39, 44, 54);\n"
+                                     "}")
+        self.theme_box.setObjectName("theme_box")
+        self.theme_box.addItem("")
+        self.theme_box.addItem("")
+        self.theme_box.addItem("")
+        self.theme_box.addItem("")
+        self.theme_box.addItem("")
+        self.theme_box.addItem("")
+        self.theme_box.addItem("")
+        self.verticalLayout_11.addWidget(self.theme_box)
+        spacerItem11 = QtWidgets.QSpacerItem(20, 5, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.verticalLayout_11.addItem(spacerItem11)
+        self.additional_settings_layout = QtWidgets.QGridLayout()
+        self.additional_settings_layout.setHorizontalSpacing(5)
+        self.additional_settings_layout.setVerticalSpacing(10)
+        self.additional_settings_layout.setObjectName("additional_settings_layout")
+        self.tint = QtWidgets.QPushButton(self.appearance_frame)
+        self.tint.setMinimumSize(QtCore.QSize(10, 0))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setWeight(50)
+        self.tint.setFont(font)
+        self.tint.setStyleSheet("text-align: left;\n"
+                                "background: transparent;\n"
+                                "color: white;\n"
+                                "margin-left: 35px;")
+        self.tint.setObjectName("tint")
+        self.additional_settings_layout.addWidget(self.tint, 1, 0, 1, 1)
+        self.tint_slider = QtWidgets.QSlider(self.appearance_frame)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.tint_slider.sizePolicy().hasHeightForWidth())
+        self.tint_slider.setSizePolicy(sizePolicy)
+        self.tint_slider.setMinimumSize(QtCore.QSize(120, 0))
+        self.tint_slider.setStyleSheet("QSlider::groove:horizontal {\n"
+                                       "    border:1px solid rgba(255, 255, 255, 0.30);\n"
+                                       "    height: 8px;\n"
+                                       "    background: :rgba(255, 255, 255, 0.30); \n"
+                                       "    margin: 2px 0;\n"
+                                       "}\n"
+                                       "\n"
+                                       "QSlider::handle:horizontal {\n"
+                                       "    background: rgba(255, 255, 255, 0.30);\n"
+                                       "    border: 1px ;\n"
+                                       "    width: 5px;\n"
+                                       "    margin: -2px 0; /* handle is placed by default on the contents rect of the groove. Expand outside the groove */\n"
+                                       "    border-radius: 10px;\n"
+                                       "}\n"
+                                       "\n"
+                                       "QSlider::sub-page:horizontal {\n"
+                                       "                border-radius :3px;\n"
+                                       "                background-color: rgba(255, 255, 255, 0.30);\n"
+                                       "                }")
+        self.tint_slider.setMaximum(100)
+        self.tint_slider.setProperty("value", 0)
+        self.tint_slider.setOrientation(QtCore.Qt.Horizontal)
+        self.tint_slider.setObjectName("tint_slider")
+        self.additional_settings_layout.addWidget(self.tint_slider, 1, 1, 1, 1)
+        self.radius = QtWidgets.QPushButton(self.appearance_frame)
+        self.radius.setMinimumSize(QtCore.QSize(100, 0))
+        self.radius.setMaximumSize(QtCore.QSize(50, 16777215))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setWeight(50)
+        self.radius.setFont(font)
+        self.radius.setStyleSheet("text-align: left;\n"
+                                  "background: transparent;\n"
+                                  "color: white;\n"
+                                  "margin-left: 35px;")
+        self.radius.setObjectName("radius")
+        self.additional_settings_layout.addWidget(self.radius, 2, 0, 1, 1)
+        self.radius_slider = QtWidgets.QSlider(self.appearance_frame)
+        self.radius_slider.setMinimumSize(QtCore.QSize(120, 0))
+        self.radius_slider.setStyleSheet("QSlider::groove:horizontal {\n"
+                                         "    border:1px solid rgba(255, 255, 255, 0.30);\n"
+                                         "    height: 8px;\n"
+                                         "    background: :rgba(255, 255, 255, 0.30); \n"
+                                         "    margin: 2px 0;\n"
+                                         "}\n"
+                                         "\n"
+                                         "QSlider::handle:horizontal {\n"
+                                         "    background: rgba(255, 255, 255, 0.30);\n"
+                                         "    border: 1px ;\n"
+                                         "    width: 5px;\n"
+                                         "    margin: -2px 0; /* handle is placed by default on the contents rect of the groove. Expand outside the groove */\n"
+                                         "    border-radius: 10px;\n"
+                                         "}\n"
+                                         "\n"
+                                         "QSlider::sub-page:horizontal {\n"
+                                         "                border-radius :3px;\n"
+                                         "                background-color: rgba(255, 255, 255, 0.30);\n"
+                                         "                }")
+        self.radius_slider.setMaximum(100)
+        self.radius_slider.setOrientation(QtCore.Qt.Horizontal)
+        self.radius_slider.setObjectName("radius_slider")
+        self.additional_settings_layout.addWidget(self.radius_slider, 2, 1, 1, 1, QtCore.Qt.AlignHCenter)
+        spacerItem12 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.additional_settings_layout.addItem(spacerItem12, 1, 3, 1, 1)
+        self.additional_settings = QtWidgets.QPushButton(self.appearance_frame)
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(11)
+        font.setBold(True)
+        font.setWeight(75)
+        self.additional_settings.setFont(font)
+        self.additional_settings.setStyleSheet("text-align: left;\n"
+                                               "background: transparent;\n"
+                                               "color: white;")
+        self.additional_settings.setObjectName("additional_settings")
+        self.additional_settings_layout.addWidget(self.additional_settings, 0, 0, 1, 1)
+        spacerItem13 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.additional_settings_layout.addItem(spacerItem13, 1, 2, 1, 1)
+        self.verticalLayout_11.addLayout(self.additional_settings_layout)
+        spacerItem14 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_11.addItem(spacerItem14)
+        self.verticalLayout_9.addLayout(self.verticalLayout_11)
+        self.horizontalLayout_6.addWidget(self.appearance_frame)
+        self.verticalScrollBar = QtWidgets.QScrollBar(self.appearance_2)
+        self.verticalScrollBar.setOrientation(QtCore.Qt.Vertical)
+        self.verticalScrollBar.setObjectName("verticalScrollBar")
+        self.horizontalLayout_6.addWidget(self.verticalScrollBar)
+        self.stackedWidget.addWidget(self.appearance_2)
+        self.startup_page = QtWidgets.QWidget()
+        self.startup_page.setObjectName("startup_page")
+        self.verticalLayout_14 = QtWidgets.QVBoxLayout(self.startup_page)
+        self.verticalLayout_14.setObjectName("verticalLayout_14")
+        self.startup_frame = QtWidgets.QFrame(self.startup_page)
+        self.startup_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.startup_frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.startup_frame.setObjectName("startup_frame")
+        self.verticalLayout_13 = QtWidgets.QVBoxLayout(self.startup_frame)
+        self.verticalLayout_13.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_13.setObjectName("verticalLayout_13")
+        self.verticalLayout_12 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_12.setContentsMargins(20, -1, -1, -1)
+        self.verticalLayout_12.setObjectName("verticalLayout_12")
+        spacerItem15 = QtWidgets.QSpacerItem(0, 10, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.verticalLayout_12.addItem(spacerItem15)
+        self.start_up_label = QtWidgets.QPushButton(self.startup_frame)
+        self.start_up_label.setMinimumSize(QtCore.QSize(0, 45))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(20)
+        font.setBold(True)
+        font.setWeight(75)
+        self.start_up_label.setFont(font)
+        self.start_up_label.setStyleSheet("color: white; background: transparent;")
+        icon25 = QtGui.QIcon()
+        icon25.addPixmap(
+            QtGui.QPixmap("assets/resources/images/startup.png"),
+            QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.start_up_label.setIcon(icon25)
+        self.start_up_label.setIconSize(QtCore.QSize(35, 35))
+        self.start_up_label.setObjectName("start_up_label")
+        self.verticalLayout_12.addWidget(self.start_up_label, 0, QtCore.Qt.AlignHCenter | QtCore.Qt.AlignTop)
+        spacerItem16 = QtWidgets.QSpacerItem(20, 6, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.verticalLayout_12.addItem(spacerItem16)
+        self.new_tab_toggle = QtWidgets.QRadioButton(self.startup_frame)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.new_tab_toggle.sizePolicy().hasHeightForWidth())
+        self.new_tab_toggle.setSizePolicy(sizePolicy)
+        self.new_tab_toggle.setMinimumSize(QtCore.QSize(0, 30))
+        font = QtGui.QFont()
+        font.setFamily("Segoe MVR MDL2 Animation")
+        font.setPointSize(11)
+        font.setBold(False)
+        font.setWeight(50)
+        self.new_tab_toggle.setFont(font)
+        self.new_tab_toggle.setStyleSheet("QRadioButton{\n"
+                                          "    color: white;\n"
+                                          "}\n"
+                                          "\n"
+                                          "QRadioButton::indicator {\n"
+                                          "    border: 3px solid rgb(52, 59, 72);\n"
+                                          "    width: 15px;\n"
+                                          "    color: white; \n"
+                                          "    text-align: center;\n"
+                                          "    height: 15px;\n"
+                                          "    border-radius: 10px;\n"
+                                          "    background: rgb(44, 49, 60);\n"
+                                          "}\n"
+                                          "QRadioButton::indicator:hover {\n"
+                                          "     border: 3px solid rgb(58, 66, 81);\n"
+                                          "}\n"
+                                          "QRadioButton::indicator:checked {\n"
+                                          "    background: 3px solid rgb(94, 106, 130);\n"
+                                          "    border: 3px solid rgb(52, 59, 72);\n"
+                                          "}")
+        self.new_tab_toggle.setObjectName("new_tab_toggle")
+        self.verticalLayout_12.addWidget(self.new_tab_toggle)
+        self.left_off = QtWidgets.QRadioButton(self.startup_frame)
+        self.left_off.setMinimumSize(QtCore.QSize(0, 30))
+        font = QtGui.QFont()
+        font.setFamily("Segoe MVR MDL2 Animation")
+        font.setPointSize(11)
+        font.setBold(False)
+        font.setWeight(50)
+        self.left_off.setFont(font)
+        self.left_off.setStyleSheet("QRadioButton{\n"
+                                    "    color: white;\n"
+                                    "}\n"
+                                    "\n"
+                                    "QRadioButton::indicator {\n"
+                                    "    border: 3px solid rgb(52, 59, 72);\n"
+                                    "    width: 15px;\n"
+                                    "    color: white; \n"
+                                    "    text-align: center;\n"
+                                    "    height: 15px;\n"
+                                    "    border-radius: 10px;\n"
+                                    "    background: rgb(44, 49, 60);\n"
+                                    "}\n"
+                                    "QRadioButton::indicator:hover {\n"
+                                    "     border: 3px solid rgb(58, 66, 81);\n"
+                                    "}\n"
+                                    "QRadioButton::indicator:checked {\n"
+                                    "    background: 3px solid rgb(94, 106, 130);\n"
+                                    "    border: 3px solid rgb(52, 59, 72);\n"
+                                    "}")
+        self.left_off.setObjectName("left_off")
+        self.verticalLayout_12.addWidget(self.left_off)
+        self.specific_page = QtWidgets.QRadioButton(self.startup_frame)
+        self.specific_page.setMinimumSize(QtCore.QSize(0, 30))
+        font = QtGui.QFont()
+        font.setFamily("Segoe MVR MDL2 Animation")
+        font.setPointSize(11)
+        font.setBold(False)
+        font.setWeight(50)
+        self.specific_page.setFont(font)
+        self.specific_page.setStyleSheet("QRadioButton{\n"
+                                         "    color: white;\n"
+                                         "}\n"
+                                         "\n"
+                                         "QRadioButton::indicator {\n"
+                                         "    border: 3px solid rgb(52, 59, 72);\n"
+                                         "    width: 15px;\n"
+                                         "    color: white; \n"
+                                         "    text-align: center;\n"
+                                         "    height: 15px;\n"
+                                         "    border-radius: 10px;\n"
+                                         "    background: rgb(44, 49, 60);\n"
+                                         "}\n"
+                                         "QRadioButton::indicator:hover {\n"
+                                         "     border: 3px solid rgb(58, 66, 81);\n"
+                                         "}\n"
+                                         "QRadioButton::indicator:checked {\n"
+                                         "    background: 3px solid rgb(94, 106, 130);\n"
+                                         "    border: 3px solid rgb(52, 59, 72);\n"
+                                         "}")
+        self.specific_page.setObjectName("specific_page")
+        self.verticalLayout_12.addWidget(self.specific_page)
+        spacerItem17 = QtWidgets.QSpacerItem(20, 7, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.verticalLayout_12.addItem(spacerItem17)
+        self.gridLayout_3 = QtWidgets.QGridLayout()
+        self.gridLayout_3.setObjectName("gridLayout_3")
+        spacerItem18 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_3.addItem(spacerItem18, 0, 2, 1, 1)
+        self.specific_page_url = QtWidgets.QLineEdit(self.startup_frame)
+        self.specific_page_url.setEnabled(False)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.specific_page_url.sizePolicy().hasHeightForWidth())
+        self.specific_page_url.setSizePolicy(sizePolicy)
+        self.specific_page_url.setMinimumSize(QtCore.QSize(200, 0))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(11)
+        font.setBold(True)
+        font.setWeight(75)
+        self.specific_page_url.setFont(font)
+        self.specific_page_url.setStyleSheet("QLineEdit {\n"
+                                             "    color: white;\n"
+                                             "   border-radius: 5px;\n"
+                                             "   border: 2px solid rgb(33, 37, 43);\n"
+                                             "   padding-left: 10px;\n"
+                                             "   selection-color: rgb(255, 255, 255);\n"
+                                             "   selection-background-color: rgb(255, 121, 198);\n"
+                                             "}\n"
+                                             "\n"
+                                             "QLineEdit:hover {\n"
+                                             "   border: 2px solid rgb(64, 71, 88);\n"
+                                             "    background-color: rgba(255, 255, 255, 30)\n"
+                                             "}\n"
+                                             "\n"
+                                             "QLineEdit:focus {\n"
+                                             "  border: 2px solid rgb(91, 101, 124);\n"
+                                             "}")
+        self.specific_page_url.setText("")
+        self.specific_page_url.setObjectName("specific_page_url")
+        self.gridLayout_3.addWidget(self.specific_page_url, 0, 1, 1, 1)
+        spacerItem19 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_3.addItem(spacerItem19, 1, 1, 1, 1)
+        spacerItem20 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_3.addItem(spacerItem20, 0, 0, 1, 1)
+        self.verticalLayout_12.addLayout(self.gridLayout_3)
+        self.verticalLayout_13.addLayout(self.verticalLayout_12)
+        self.verticalLayout_14.addWidget(self.startup_frame)
+        self.stackedWidget.addWidget(self.startup_page)
+        self.feedback_page = QtWidgets.QWidget()
+        self.feedback_page.setObjectName("feedback_page")
+        self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.feedback_page)
+        self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.gridLayout_11 = QtWidgets.QGridLayout()
+        self.gridLayout_11.setSpacing(0)
+        self.gridLayout_11.setObjectName("gridLayout_11")
+        self.feedback_frame = QtWidgets.QFrame(self.feedback_page)
+        self.feedback_frame.setStyleSheet("background-color: rgba(0,0,0,0.0)")
+        self.feedback_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.feedback_frame.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.feedback_frame.setObjectName("feedback_frame")
+        self.verticalLayout_17 = QtWidgets.QVBoxLayout(self.feedback_frame)
+        self.verticalLayout_17.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_17.setSpacing(0)
+        self.verticalLayout_17.setObjectName("verticalLayout_17")
+        self.verticalLayout_19 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_19.setContentsMargins(20, -1, 20, -1)
+        self.verticalLayout_19.setSpacing(0)
+        self.verticalLayout_19.setObjectName("verticalLayout_19")
+        self.label_3 = QtWidgets.QLabel(self.feedback_frame)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Ignored)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
+        self.label_3.setSizePolicy(sizePolicy)
+        self.label_3.setMinimumSize(QtCore.QSize(0, 0))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(11)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_3.setFont(font)
+        self.label_3.setStyleSheet("color: white; background: transparent;")
+        self.label_3.setText("")
+        self.label_3.setWordWrap(True)
+        self.label_3.setObjectName("label_3")
+        self.verticalLayout_19.addWidget(self.label_3)
+        self.feedback_graphics_frame = QtWidgets.QFrame(self.feedback_frame)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.feedback_graphics_frame.sizePolicy().hasHeightForWidth())
+        self.feedback_graphics_frame.setSizePolicy(sizePolicy)
+        self.feedback_graphics_frame.setMinimumSize(QtCore.QSize(0, 200))
+        self.feedback_graphics_frame.setStyleSheet("background: transparent;")
+        self.feedback_graphics_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.feedback_graphics_frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.feedback_graphics_frame.setObjectName("feedback_graphics_frame")
+        self.verticalLayout_21 = QtWidgets.QVBoxLayout(self.feedback_graphics_frame)
+        self.verticalLayout_21.setObjectName("verticalLayout_21")
+        self.verticalLayout_22 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_22.setObjectName("verticalLayout_22")
+        self.label_2 = QtWidgets.QLabel(self.feedback_graphics_frame)
+        self.label_2.setMinimumSize(QtCore.QSize(0, 0))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(20)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_2.setFont(font)
+        self.label_2.setStyleSheet("color: white; background: transparent;")
+        self.label_2.setObjectName("label_2")
+        self.verticalLayout_22.addWidget(self.label_2, 0, QtCore.Qt.AlignHCenter | QtCore.Qt.AlignTop)
+        spacerItem21 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.verticalLayout_22.addItem(spacerItem21)
+        self.label_4 = QtWidgets.QLabel(self.feedback_graphics_frame)
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(11)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_4.setFont(font)
+        self.label_4.setStyleSheet("color: white; background: transparent;")
+        self.label_4.setWordWrap(True)
+        self.label_4.setObjectName("label_4")
+        self.verticalLayout_22.addWidget(self.label_4)
+        spacerItem22 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_22.addItem(spacerItem22)
+        self.verticalLayout_21.addLayout(self.verticalLayout_22)
+        self.verticalLayout_19.addWidget(self.feedback_graphics_frame)
+        self.gridLayout_15 = QtWidgets.QGridLayout()
+        self.gridLayout_15.setObjectName("gridLayout_15")
+        self.sent_ui = QtWidgets.QPushButton(self.feedback_frame)
+        self.sent_ui.setMinimumSize(QtCore.QSize(0, 200))
+        self.sent_ui.setMaximumSize(QtCore.QSize(210, 16777215))
+        self.sent_ui.setStyleSheet("QPushButton{\n"
+                                   "    background: transparent;\n"
+                                   "    color: white;\n"
+                                   "    border-radius: 100px;\n"
+                                   "    background-color : rgba(255, 255  ,255 ,50);\n"
+                                   "}")
+        self.sent_ui.setText("")
+        icon26 = QtGui.QIcon()
+        icon26.addPixmap(
+            QtGui.QPixmap("assets/resources/images/mark96.png"),
+            QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.sent_ui.setIcon(icon26)
+        self.sent_ui.setIconSize(QtCore.QSize(96, 96))
+        self.sent_ui.setObjectName("sent_ui")
+        self.gridLayout_15.addWidget(self.sent_ui, 0, 0, 1, 1)
+        self.response = QtWidgets.QPushButton(self.feedback_frame)
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setWeight(50)
+        self.response.setFont(font)
+        self.response.setStyleSheet("color: white; background: transparent;")
+        self.response.setObjectName("response")
+        self.gridLayout_15.addWidget(self.response, 2, 0, 1, 1)
+        spacerItem23 = QtWidgets.QSpacerItem(20, 5, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.gridLayout_15.addItem(spacerItem23, 1, 0, 1, 1)
+        self.verticalLayout_19.addLayout(self.gridLayout_15)
+        self.write_to_us_box = QtWidgets.QPlainTextEdit(self.feedback_frame)
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setItalic(True)
+        font.setWeight(75)
+        self.write_to_us_box.setFont(font)
+        self.write_to_us_box.setStyleSheet("color: white;\n"
+                                           " background: transparent; \n"
+                                           "border: 0;\n"
+                                           "margin-left: 10px;r")
+        self.write_to_us_box.setBackgroundVisible(True)
+        self.write_to_us_box.setObjectName("write_to_us_box")
+        self.verticalLayout_19.addWidget(self.write_to_us_box)
+        spacerItem24 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_19.addItem(spacerItem24)
+        self.send_feedback = QtWidgets.QPushButton(self.feedback_frame)
+        self.send_feedback.setMinimumSize(QtCore.QSize(0, 45))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.send_feedback.setFont(font)
+        self.send_feedback.setStyleSheet("QPushButton{\n"
+                                         "color: white;\n"
+                                         "background: transparent;\n"
+                                         "}\n"
+                                         "\n"
+                                         "QPushButton::hover{\n"
+                                         "    color: white;\n"
+                                         "    background-color : rgba(255, 255  ,255 ,50);\n"
+                                         "\n"
+                                         "}\n"
+                                         "\n"
+                                         "QPushButton::pressed{\n"
+                                         "    background-color: rgba(255, 255, 255, 80)\n"
+                                         "}\n"
+                                         "")
+        self.send_feedback.setObjectName("send_feedback")
+        self.verticalLayout_19.addWidget(self.send_feedback)
+        self.write_to_us = QtWidgets.QPushButton(self.feedback_frame)
+        self.write_to_us.setMinimumSize(QtCore.QSize(0, 0))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setItalic(True)
+        font.setWeight(75)
+        self.write_to_us.setFont(font)
+        self.write_to_us.setStyleSheet("QPushButton{\n"
+                                       "color: white;\n"
+                                       "background: transparent;\n"
+                                       "}\n"
+                                       "\n"
+                                       "QPushButton::hover{\n"
+                                       "    color: white;\n"
+                                       "    background-color : rgba(255, 255  ,255 ,50);\n"
+                                       "\n"
+                                       "}\n"
+                                       "\n"
+                                       "QPushButton::pressed{\n"
+                                       "    background-color: rgba(255, 255, 255, 80)\n"
+                                       "}\n"
+                                       "")
+        icon27 = QtGui.QIcon()
+        icon27.addPixmap(QtGui.QPixmap(
+            "assets/resources/images/icons8-contact-us-48.png"),
+                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.write_to_us.setIcon(icon27)
+        self.write_to_us.setIconSize(QtCore.QSize(35, 35))
+        self.write_to_us.setObjectName("write_to_us")
+        self.verticalLayout_19.addWidget(self.write_to_us)
+        spacerItem25 = QtWidgets.QSpacerItem(20, 13, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.verticalLayout_19.addItem(spacerItem25)
+        self.verticalLayout_17.addLayout(self.verticalLayout_19)
+        self.gridLayout_11.addWidget(self.feedback_frame, 0, 0, 1, 1)
+        self.verticalLayout_4.addLayout(self.gridLayout_11)
+        self.stackedWidget.addWidget(self.feedback_page)
+        self.gridLayout_8.addWidget(self.stackedWidget, 0, 2, 1, 1)
+        self.line = QtWidgets.QFrame(self.settings1)
+        self.line.setMaximumSize(QtCore.QSize(1, 16777215))
+        self.line.setStyleSheet("background-color:  rgba(255, 255, 255, 30);\n"
+                                "color: rgba(255, 255, 255, 30);\n"
+                                "margin-left: 15px;\n"
+                                "margin-right: 15px;")
+        self.line.setFrameShape(QtWidgets.QFrame.VLine)
+        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line.setObjectName("line")
+        self.gridLayout_8.addWidget(self.line, 0, 1, 1, 1)
+        self.tabWidget.addTab(self.settings1, "")
+        self.gridLayout_2.addWidget(self.tabWidget, 0, 0, 1, 1)
+        self.verticalLayout_6.addWidget(self.main_frame)
+        self.main_stacked_widget.addWidget(self.main_pages)
+        self.page = QtWidgets.QWidget()
+        self.page.setObjectName("page")
+        self.gridLayout_7 = QtWidgets.QGridLayout(self.page)
+        self.gridLayout_7.setObjectName("gridLayout_7")
+        self.gridLayout_6 = QtWidgets.QGridLayout()
+        self.gridLayout_6.setObjectName("gridLayout_6")
+        self.gridLayout_7.addLayout(self.gridLayout_6, 0, 0, 1, 1)
+        self.main_stacked_widget.addWidget(self.page)
+        self.verticalLayout.addWidget(self.main_stacked_widget)
+        self.main_layout.addWidget(self.window_frame)
+        self.gridLayout.addWidget(self.all_frame, 0, 0, 1, 1)
+
+        self.retranslateUi(Form)
+        self.tabWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(0)
+        QtCore.QMetaObject.connectSlotsByName(Form)
+        Form.setTabOrder(self.GDrive, self.thisPC)
+        Form.setTabOrder(self.thisPC, self.downloads)
+        Form.setTabOrder(self.downloads, self.videos)
+        Form.setTabOrder(self.videos, self.settings)
+        Form.setTabOrder(self.settings, self.minimize)
+        Form.setTabOrder(self.minimize, self.maximize)
+        Form.setTabOrder(self.maximize, self.close)
+        Form.setTabOrder(self.close, self.pictures)
+        Form.setTabOrder(self.pictures, self.collapse)
+
+    def retranslateUi(self, Form):
+        _translate = QtCore.QCoreApplication.translate
+        Form.setWindowTitle(_translate("Form", "Fluent Explorer.exe"))
+        self.collapse.setText(_translate("Form", "  Fluent Explorer"))
+        self.search_box.setPlaceholderText(_translate("Form", "Search Anything"))
+        self.GDrive.setText(_translate("Form", "   GDrive"))
+        self.thisPC.setText(_translate("Form", "   This pc"))
+        self.downloads.setText(_translate("Form", "   Downloads"))
+        self.pictures.setText(_translate("Form", "   Pictures"))
+        self.videos.setText(_translate("Form", "   Videos"))
+        self.music.setText(_translate("Form", "   Music"))
+        self.documents.setText(_translate("Form", "   Documents"))
+        self.settings.setText(_translate("Form", "   Settings"))
+        self.path.setPlaceholderText(_translate("Form", " Path :  "))
+        self.this_pc_label.setText(_translate("Form", "This pc"))
+        self.pushButton_6.setText(_translate("Form", "Drives"))
+        self.pushButton_5.setText(_translate("Form", "Library"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.this_pc_2), _translate("Form", "  This pc           "))
+        self.downloads_label.setText(_translate("Form", "Downloads"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.downloads_tab),
+                                  _translate("Form", "  Downloads           "))
+        self.this_pc_label_2.setText(_translate("Form", "Music"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.music_tab), _translate("Form", "  Music           "))
+        self.settings_button.setText(_translate("Form", "  Settings "))
+        self.settings_button.setShortcut(_translate("Form", "Ctrl+R"))
+        self.appearance.setText(_translate("Form", "Appearance   "))
+        self.passwords.setText(_translate("Form", " View Style     "))
+        self.startup.setText(_translate("Form", "On Startup      "))
+        self.controller.setText(_translate("Form", " Controller      "))
+        self.hidden_files.setText(_translate("Form", " Hidden Files  "))
+        self.feedback.setText(_translate("Form", "  Feedback  "))
+        self.appearance_label.setText(_translate("Form", " Appearance"))
+        self.effect_label.setText(_translate("Form", "Effects"))
+        self.effect_radiobutton.setText(_translate("Form", "Elegant Effect"))
+        self.theme_box.setItemText(0, _translate("Form", "Default"))
+        self.theme_box.setItemText(1, _translate("Form", "Acrylic"))
+        self.theme_box.setItemText(2, _translate("Form", "Transparent"))
+        self.theme_box.setItemText(3, _translate("Form", "Blur"))
+        self.theme_box.setItemText(4, _translate("Form", "Light"))
+        self.theme_box.setItemText(5, _translate("Form", "Dark"))
+        self.theme_box.setItemText(6, _translate("Form", "Amoled"))
+        self.tint.setText(_translate("Form", "Tint"))
+        self.radius.setText(_translate("Form", "Radius"))
+        self.additional_settings.setText(_translate("Form", "Additional Settings "))
+        self.start_up_label.setText(_translate("Form", " StartUp"))
+        self.new_tab_toggle.setText(_translate("Form", "Open a net tab."))
+        self.left_off.setText(_translate("Form", "Continue where you left."))
+        self.specific_page.setText(_translate("Form", "Open a specific page."))
+        self.specific_page_url.setPlaceholderText(_translate("Form", "Address"))
+        self.label_2.setText(_translate("Form", "Help & Feedback"))
+        self.label_4.setText(_translate("Form",
+                                        "You can make contribution in the development of this software  by telling us what you do not like about this application at Legendawaken4@gmail.com. This app is under development please contact us and report your issue it may get fixed in the next release."))
+        self.response.setText(_translate("Form", "Thank You for your feedback."))
+        self.send_feedback.setText(_translate("Form", "Send Feedback."))
+        self.write_to_us.setText(_translate("Form", "  Write to Us "))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.settings1), _translate("Form", "  Settings           "))
+
+    def additional_settings_manager(self, *args):
+        for i in args:
+            if i == 'set_default':
+                with open('rep32.dll', 'r') as theme_reader:
+                    read_theme = theme_reader.read()
+                if read_theme == 'transparent':
+                    self.additional_settings_manager('tint_only')
+                elif read_theme == 'blur':
+                    self.additional_settings_manager('set_visible')
+                else:
+                    self.additional_settings_manager('set_invisible')
+
+            if i == 'set_visible':
+                self.additional_settings.setVisible(True)
+                self.tint.setVisible(True)
+                self.radius.setVisible(True)
+                self.tint_slider.setVisible(True)
+                self.radius_slider.setVisible(True)
+            if i == 'set_invisible':
+                self.additional_settings.setVisible(False)
+                self.tint.setVisible(False)
+                self.radius.setVisible(False)
+                self.tint_slider.setVisible(False)
+                self.radius_slider.setVisible(False)
+            if i == 'tint_only':
+                self.additional_settings.setVisible(True)
+                self.tint.setVisible(True)
+                self.tint_slider.setVisible(True)
+                self.radius.setVisible(False)
+                self.radius_slider.setVisible(False)
+            if i == 'radius_only':
+                self.additional_settings.setVisible(True)
+                self.tint.setVisible(False)
+                self.tint_slider.setVisible(False)
+                self.radius.setVisible(True)
+                self.radius_slider.setVisible(True)
+
+
     def set_acrylic(self, val=True or False, *args):
         if val:
             for i in args:
@@ -279,7 +2106,7 @@ class Main(QWidget):
     def setup_elegantUi(self):
         if self.isMaximized():
             if self.effect_radiobutton.isChecked():
-                self.set_acrylic(True, "set_all")
+                # self.set_acrylic(True, "set_all")
                 self.setTheme()
                 with open("lib.dll", "w") as writer:
                     writer.write("True")
@@ -302,7 +2129,6 @@ class Main(QWidget):
 
     def slideMenu(self, value= True or False):
         width = self.graphics.width()
-
 
         if value:
             # decrease the slide menu size
@@ -428,14 +2254,15 @@ QPushButton::pressed{
             icon.addFile("assets/resources/images/maximize.png", QSize(), QIcon.Normal, QIcon.Off)
             self.slideMenu(value=True)
             self.maximize.setIcon(icon)
-
             self.set_acrylic(False, 'dark')
+            self.additional_settings_manager('set_invisible')
         else:
             self.showMaximized()
             icon = QIcon()
             icon.addFile("assets/resources/images/estore.png", QSize(), QIcon.Normal, QIcon.Off)
             self.maximize.setIcon(icon)
             self.set_acrylic(True)
+            self.additional_settings_manager('set_default')
 
     def stop(self):
         app.closeAllWindows()
@@ -842,7 +2669,6 @@ QPushButton::pressed{
         self.feedback.clicked.connect(self.feedback_UI)
         self.write_to_us.clicked.connect(self.feedback_graphics_effect_UI)
         # Title bar buttons
-        # self.close.clicked.connect(self.stop)
         self.music.clicked.connect(self.music_UI)
         self.minimize.clicked.connect(self.min)
         self.maximize.clicked.connect(self.max_reduce)
@@ -854,6 +2680,12 @@ QPushButton::pressed{
         self.effect_radiobutton.toggled.connect(self.setup_elegantUi)
         self.theme_box.activated.connect(self.theme_manager)
         self.appearance.clicked.connect(self.appearance_UI)
+        self.startup.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(1))
+
+        # starup
+        self.specific_page.toggled.connect(lambda: self.specific_page_url.setEnabled(True))
+        self.left_off.toggled.connect(lambda: self.specific_page_url.setEnabled(False))
+        self.new_tab_toggle.toggled.connect(lambda: self.specific_page_url.setEnabled(False))
 
     def themeRegistry(self, theme='acrylic'):
         with open('rep32.dll', 'w') as theme_writer:
@@ -887,11 +2719,13 @@ QPushButton::pressed{
         if self.theme_box.currentText() == 'Dark':
             self.set_acrylic(False, 'dark')
             self.themeRegistry('dark')
+            self.additional_settings_manager('set_invisible')
 
         elif self.theme_box.currentText() == 'Blur':
             with open('effectSupport.dll', 'w') as writer:
                 writer.write('ten')
             self.themeRegistry('blur')
+            self.additional_settings_manager('set_visible')
 
             with open("assets/resources/holder.tru", 'r') as val:
                     r = val.read()
@@ -919,14 +2753,17 @@ QPushButton::pressed{
                     border: 0;""")
 
         elif self.theme_box.currentText() == 'Default':
+            self.additional_settings_manager('set_invisible')
             self.set_acrylic(True, 'set_on_left')
             self.themeRegistry('default')
 
         elif self.theme_box.currentText() == 'Amoled':
+            self.additional_settings_manager('set_invisible')
             self.set_acrylic(False, 'amoled')
             self.themeRegistry('amoled')
 
         elif self.theme_box.currentText() == 'Acrylic':
+            self.additional_settings_manager('set_invisible')
             with open('effectSupport.dll', 'w') as writer:
                 writer.write('acrylic')
             with open("assets/resources/holder.tru", 'r') as val:
@@ -958,6 +2795,8 @@ QPushButton::pressed{
         elif self.theme_box.currentText() == 'Transparent':
             self.themeRegistry('transparent')
             self.set_acrylic(False, 'semi-transparent')
+            self.additional_settings_manager('tint_only')
+
         elif self.theme_box.currentText() == 'Light':
             self.themeRegistry('light')
             self.set_acrylic(False, 'light')
@@ -993,6 +2832,10 @@ def check_window():
                 with open('DWM.dll', 'w') as writer:
                     writer.write('True')
 
+                # mouse reader
+                # with open('assets/abstracts/meta.dll', 'r') as reader:
+                #     rp = reader.read()
+
                 # grab screen
                 if read_config == "True" or read_config == '':
                     get_image = screenshot()
@@ -1019,7 +2862,7 @@ def check_window():
                 if read ==  'ten':
                     func = lambda x: x/3.0
                 else:
-                    func = lambda x: x/4.0
+                    func = lambda x: x/3.5
 
                 skinned_ = Image.eval(frame_one_image, func)
                 # blur the image
@@ -1167,20 +3010,18 @@ def clock(func, sec):
 
 clock(cleaner, 1.0)
 clock(switch_check, 0.2)
-# clock(no_screen, 0.1)
 
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    MainWindow = Main()
-    windowTimer = QTimer()
-    windowTimer.timeout.connect(no_screen)
-    windowTimer.timeout.connect(check_window)
-    windowTimer.setInterval(1)
-    windowTimer.start()
-    MainWindow.show()
-    start_splash()
-    app.exec()
+app = QApplication(sys.argv)
+MainWindow = Main()
+windowTimer = QTimer()
+windowTimer.timeout.connect(no_screen)
+windowTimer.timeout.connect(check_window)
+windowTimer.setInterval(1)
+windowTimer.start()
+MainWindow.show()
+start_splash()
+app.exec()
 
 
 
